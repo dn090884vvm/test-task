@@ -1,6 +1,6 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import Quotes from "./components/quotes/quotes";
+import Quotes from "./components/Quotes/Quotes";
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import { List } from "./App.styled";
@@ -10,10 +10,12 @@ function App() {
 
   useEffect(() => {
     const socket = io("http://localhost:4000/");
-    socket.on("connection", () => console.log(socket.connected));
-    socket.emit("start");
+    socket.on("connect", () => {
+      console.log(socket.connected);
+      socket.emit("start");
+    });
+
     socket.on("ticker", function (quotes) {
-      // console.log(quotes);
       setQuotesList(quotes);
     });
   }, []);
